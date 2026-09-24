@@ -1,8 +1,19 @@
 package org.example;
 
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class BuddyInfo {
     private String name;
+
+    @Id
+    private Integer id;
+
     private String phoneNumber;
+
+    public BuddyInfo(){}
 
     public BuddyInfo(String name, String phoneNumber) {
         this.name = name;
@@ -23,5 +34,12 @@ public class BuddyInfo {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

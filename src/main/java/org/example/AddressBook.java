@@ -1,11 +1,19 @@
 package org.example;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class AddressBook {
     private List<BuddyInfo> buddies;
     private int count;
+    @Id
+    private Integer id;
 
     public AddressBook() {
         this.buddies = new ArrayList<>();
@@ -24,8 +32,15 @@ public class AddressBook {
         addressBook.addBuddy(buddy3);
 
         addressBook.printBuddies();
+
+        System.out.println("Running BuddyManager...\n\n");
+
+        BuddyManager buddyManager = new BuddyManager();
+
+        buddyManager.performJPA();
     }
 
+    @OneToMany(cascade = CascadeType.PERSIST)
     public List<BuddyInfo> getBuddies() {
         return buddies;
     }
@@ -43,5 +58,13 @@ public class AddressBook {
         for (BuddyInfo buddy : buddies) {
             System.out.println("Buddy name is " + buddy.getName() + " and buddy phone number is " + buddy.getPhoneNumber());
         }
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
