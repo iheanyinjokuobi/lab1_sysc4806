@@ -1,0 +1,11 @@
+These are the commands i used in the git bash:
+$ curl -X POST http://localhost:8080/api/addressbooks -H "Content-Type: application/json" -d "{}
+$ curl -X POST http://localhost:8080/api/buddies -H "Content-Type: application/json" -d '{"name":"John","phoneNumber":"12345678"}'
+$ curl -X POST http://localhost:8080/api/buddies -H "Content-Type: application/json" -d '{"name":"Iheanyi","phoneNumber":"23456789"}'
+$ curl -X POST http://localhost:8080/api/buddies -H "Content-Type: application/json" -d '{"name":"Efe","phoneNumber":"34567890"}'
+$ curl -X POST http://localhost:8080/api/addressbooks/1/buddies/1
+$ curl -X POST http://localhost:8080/api/addressbooks/1/buddies/2
+$ curl -X POST http://localhost:8080/api/addressbooks/1/buddies/3
+
+and this is the endpoint for the view:
+http://localhost:8080/api/addressbooks/1
