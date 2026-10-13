@@ -2,6 +2,7 @@ package org.example;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
@@ -9,6 +10,7 @@ public class BuddyInfo {
     private String name;
 
     @Id
+    @GeneratedValue
     private Integer id;
 
     private String phoneNumber;
