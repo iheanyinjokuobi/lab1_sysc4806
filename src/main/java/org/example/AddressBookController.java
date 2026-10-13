@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/api/addressbooks")
 public class AddressBookController {
 
@@ -27,10 +27,10 @@ public class AddressBookController {
     }
 
     @GetMapping("/{id}")
-    public String getAddressBook(@PathVariable Integer id, Model model) {
+    public AddressBook getAddressBook(@PathVariable Integer id, Model model) {
         AddressBook addressBook = addressBookRepository.findById(id).orElseThrow();
         model.addAttribute("buddies", addressBook.getBuddies());
-        return "addressBook";
+        return addressBook;
     }
 
     @PostMapping("/{addressBookId}/buddies/{buddyId}")
