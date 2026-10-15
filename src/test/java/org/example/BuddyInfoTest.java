@@ -7,7 +7,7 @@ class BuddyInfoTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        buddy = new BuddyInfo("Iheanyi", "12345678");
+        buddy = new BuddyInfo("Iheanyi", "12345678", "Lagos");
     }
 
     @org.junit.jupiter.api.Test

@@ -13,9 +13,9 @@ class AddressBookTest {
     void setUp() {
         addressBook = new AddressBook();
 
-        buddy1 = new BuddyInfo("John", "12345678");
-        buddy2 = new BuddyInfo("Ada", "23456789");
-        buddy3 = new BuddyInfo("Ada", "34567890");
+        buddy1 = new BuddyInfo("John", "12345678", "Ajah Estate");
+        buddy2 = new BuddyInfo("Ada", "23456789", "Ikeja");
+        buddy3 = new BuddyInfo("Ada", "34567890", "London");
 
         addressBook.addBuddy(buddy1);
         addressBook.addBuddy(buddy2);
