@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Address Book Application</title>
+</head>
+
+<body>
+
+<h1>Address Book Application</h1>
+
+<p th:if="${error}" th:text="${error}"></p>
+
+<h2>Existing Address Books</h2>
+
+<table border="1" width="100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="addressBook : ${addressBooks}">
+        <td th:text="${addressBook.id}"></td>
+        <td>
+            <a th:href="@{/{id}(id=${addressBook.id})}">View Buddies</a>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<form method="post" th:action="@{/create}">
+    <button type="submit">Create Address Book</button>
+</form>
+
+</body>
+</html>
