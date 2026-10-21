@@ -1,23 +1,50 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-    <title>Address Book</title>
+    <meta charset="UTF-8">
+    <title>AddressBook</title>
 </head>
-
 <body>
+<h2>Address Book <span th:text="${addressBook.id}"></span> Contents</h2>
 
-<h1>Address Book</h1>
+<h3>Buddy Info</h3>
+<table border="1" width="100%">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="buddy : ${addressBook.buddies}">
+        <td th:text="${buddy.id}"></td>
+        <td th:text="${buddy.name}"></td>
+        <td th:text="${buddy.phoneNumber}"></td>
+        <td th:text="${buddy.address}"></td>
+    </tr>
+    </tbody>
+</table>
 
-<h2>Buddies</h2>
+<h3>Add Buddy</h3>
+<form method="post" th:action="@{/{id}/buddies(id=${addressBook.id})}">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
 
-<ul>
-    <li th:each="buddy : ${buddies}">
-        <span th:text="${buddy.name}"></span>
-        - phone number:
-        <span th:text="${buddy.phoneNumber}"></span>
-    </li>
-</ul>
+    <br><br>
+    <label for="phoneNumber">Phone Number</label>
+    <input type="text" id="phoneNumber" name="phoneNumber">
 
+    <br><br>
+    <label for="address">Address</label>
+    <input type="text" id="address" name="address" required>
+
+    <br><br>
+    <button type="submit">Add</button>
+</form>
+
+<br/>
+<a th:href="@{/}">Back</a>
 </body>
 </html>

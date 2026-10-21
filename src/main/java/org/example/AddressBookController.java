@@ -3,9 +3,11 @@ package org.example;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
-@RequestMapping("/api/addressbooks")
+import java.util.Optional;
+
+@Controller
 public class AddressBookController {
 
     private final AddressBookRepository addressBookRepository;
@@ -19,35 +21,52 @@ public class AddressBookController {
         this.buddyInfoRepository = buddyInfoRepository;
     }
 
-    @PostMapping
-    public AddressBook createAddressBook(
-            @RequestBody AddressBook addressBook) {
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("addressBooks", addressBookRepository.findAll());
+        return "index";
+    }
 
-        return addressBookRepository.save(addressBook);
+    @PostMapping("/create")
+    public String createAddressBook() {
+
+        AddressBook addressBook = new AddressBook();
+        addressBookRepository.save(addressBook);
+        return "redirect:/";
     }
 
     @GetMapping("/{id}")
-    public AddressBook getAddressBook(@PathVariable Integer id, Model model) {
-        AddressBook addressBook = addressBookRepository.findById(id).orElseThrow();
-        model.addAttribute("buddies", addressBook.getBuddies());
-        return addressBook;
+    public String getAddressBook(@PathVariable Integer id,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
+        Optional<AddressBook> addressBook = addressBookRepository.findById(id);
+        if (addressBook.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    "error", "No such address book found");
+            return "redirect:/";
+        }
+        model.addAttribute("addressBook", addressBook.get());
+        return "addressbook";
     }
 
-    @PostMapping("/{addressBookId}/buddies/{buddyId}")
-    public AddressBook addBuddy(
+    @PostMapping("/{addressBookId}/buddies")
+    public String addBuddy(
             @PathVariable Integer addressBookId,
-            @PathVariable Integer buddyId) {
+            @RequestParam String name,
+            @RequestParam String phoneNumber,
+            @RequestParam String address,
+            RedirectAttributes redirectAttributes) {
 
-        AddressBook addressBook =
-                addressBookRepository.findById(addressBookId)
-                        .orElseThrow();
-
-        BuddyInfo buddy =
-                buddyInfoRepository.findById(buddyId)
-                        .orElseThrow();
-
-        addressBook.addBuddy(buddy);
-
-        return addressBookRepository.save(addressBook);
+        Optional<AddressBook> addressBook = addressBookRepository.findById(addressBookId);
+        if (addressBook.isEmpty()) {
+            redirectAttributes.addFlashAttribute(
+                    "error", "No such address book found");
+            return "redirect:/";
+        }
+        BuddyInfo buddy = new BuddyInfo(name, phoneNumber, address);
+        buddyInfoRepository.save(buddy);
+        addressBook.get().addBuddy(buddy);
+        addressBookRepository.save(addressBook.get());
+        return "redirect:/" + addressBookId;
     }
 }

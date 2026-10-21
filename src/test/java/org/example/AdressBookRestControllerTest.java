@@ -11,7 +11,7 @@ import tools.jackson.databind.ObjectMapper;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureRestTestClient
-public class AdressBookControllerTest {
+public class AdressBookRestControllerTest {
 
     @Autowired
     private RestTestClient client;
